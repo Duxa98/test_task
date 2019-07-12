@@ -2,3 +2,5 @@
 /Pipfile.lock
 /Pipfile
 /db.sqlite3
+/user_list/model_utils.py
+/TODO
