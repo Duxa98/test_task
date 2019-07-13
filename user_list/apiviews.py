@@ -12,33 +12,23 @@ from .serializers import AppUserSerializer, TokenSerializer
 from stories import Failure, Result, Success, arguments, story
 
 
-class AppUserListView(viewsets.ModelViewSet):
+class AppUserList(generics.ListAPIView):
 
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
 
 
-class AppUserViewSet(viewsets.ModelViewSet):
+class AppUserInfo(generics.RetrieveAPIView):
 
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
     lookup_field = 'login'
 
-    # def create(self, request, *args, **kwargs):
-    #
-    #     resp = super(AppUserViewSet, self).create(self, request, *args, **kwargs)
-    #
-    #     print(resp)
-    #
-    #     return resp
-
-# class AppUserCreateViewSet(mixins.CreateModelMixin, viewsets.ModelViewSet):
-    # def post(self):
-
 
 class AppUserCreate(generics.ListCreateAPIView):
     queryset = AppUser.objects.all().order_by('login')
     serializer_class = AppUserSerializer
+
 
     def create(self, request, *args, **kwargs):
         user = super(AppUserCreate, self).create(request, *args, **kwargs)
@@ -52,6 +42,20 @@ class AppUserCreate(generics.ListCreateAPIView):
         )
 
         return user
+
+class AppUserUpdate(generics.RetrieveUpdateAPIView):
+
+    queryset = AppUser.objects.all()
+    serializer_class = AppUserSerializer
+    lookup_field = 'login'
+
+
+class AppUserDelete(generics.RetrieveDestroyAPIView):
+
+    queryset = AppUser.objects.all()
+    serializer_class = AppUserSerializer
+    lookup_field = 'login'
+
 
 
 class TokenViewSet(viewsets.ModelViewSet):
