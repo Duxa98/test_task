@@ -6,7 +6,6 @@ from rest_framework.reverse import reverse
 
 from user_list.models import AppUser
 
-
 @pytest.fixture(scope='function', params=[1, 2])
 def django_client_setup(db, request):
 
