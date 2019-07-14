@@ -32,7 +32,7 @@ class AppUser(models.Model):
 class Token(models.Model):
     token_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # , unique=True)
     user = models.ForeignKey(to=AppUser, on_delete=models.CASCADE, related_name='user_token')
-    token = models.TextField(null=False, max_length=32)
+    token = models.TextField(null=False, max_length=32, unique=True)
 
     class Meta:
         verbose_name = 'Token'

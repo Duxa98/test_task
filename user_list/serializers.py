@@ -2,6 +2,12 @@ from rest_framework import serializers
 
 from user_list.models import AppUser, Token
 
+from stories import Failure, Result, Success, arguments, story
+
+
+
+
+
 class AppUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = AppUser
@@ -9,9 +15,12 @@ class AppUserSerializer(serializers.ModelSerializer):
 
     def save(self, **kwargs):
         super().save(**kwargs)
+
+        token = f'{self.data["login"]}_token'
+        # if not Token.objects.filter(token=token).exists():
         data = {
             'user': AppUser.objects.get(login=self.data['login']).pk,
-            'token': f'{self.data["login"]}_token'
+            'token': token
         }
         new_token = TokenSerializer(data=data)
         if new_token.is_valid():
