@@ -1,6 +1,9 @@
 stages:
   - lint
 
+before_script:
+  - apt-get update -qq && apt-get install -y -qq flake8 flake8-django
+
 lint:
   stage: lint
   script: flake8
