@@ -5,11 +5,11 @@ from user_list.models import AppUser, Token
 from stories import Failure, Success, arguments, story
 
 
-class GetToken:
+class GenerateToken:
 
     @story
-    @arguments('data')
-    def create_token(I):
+    @arguments('login')
+    def generate(I):
         I.create_token_data
         I.create_token_object
         I.check_token_object_is_valid
@@ -17,14 +17,9 @@ class GetToken:
 
     @story
     def create_token_data(I):
-        I.load_user_login
         I.load_user_id
         I.create_token_value
         I.save_token_data
-
-    def load_user_login(self, ctx):
-        login = self.get_user_login(ctx.data)
-        return Success(login=login)
 
     def load_user_id(self, ctx):
         user_id = self.get_user_id(ctx.login)
@@ -75,8 +70,7 @@ class AppUserSerializer(serializers.ModelSerializer):
 
     def save(self, **kwargs):
         super().save(**kwargs)
-        get_token = GetToken(get_user_login, get_user_id_by_login)
-        get_token.create_token(data=self.data)
+        GenerateToken(get_user_login, get_user_id_by_login).generate(login=self.data['login'])
 
         # token = f'{self.data["login"]}_token'
         # # if not Token.objects.filter(token=token).exists():

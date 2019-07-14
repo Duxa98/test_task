@@ -4,5 +4,5 @@
 /db.sqlite3
 /user_list/model_utils.py
 /TODO
-/user_list/__pycache__/
-/test_task/__pycache__/
+/user_list/__pycache__/**
+/test_task/__pycache__/**
