@@ -13,49 +13,39 @@ from stories import Failure, Result, Success, arguments, story
 
 
 class AppUserList(generics.ListAPIView):
-
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
 
 
 class AppUserInfo(generics.RetrieveAPIView):
-
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
     lookup_field = 'login'
 
 
+def load_object_pk(model, login):
+    return model.objects.get(login=login).pk
+
+
+def load_user_login(request):
+    return request.data['login']
+
+
 class AppUserCreate(generics.ListCreateAPIView):
-    queryset = AppUser.objects.all().order_by('login')
+    queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
 
 
-    def create(self, request, *args, **kwargs):
-        user = super(AppUserCreate, self).create(request, *args, **kwargs)
-
-        login = request.data['login']
-        user_id = AppUser.objects.get(login=login).pk
-
-        Token.objects.create(
-            token=f'{login}_token',
-            user_id=user_id
-        )
-
-        return user
-
 class AppUserUpdate(generics.RetrieveUpdateAPIView):
-
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
     lookup_field = 'login'
 
 
 class AppUserDelete(generics.RetrieveDestroyAPIView):
-
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
     lookup_field = 'login'
-
 
 
 class TokenViewSet(viewsets.ModelViewSet):
@@ -65,9 +55,3 @@ class TokenViewSet(viewsets.ModelViewSet):
     # )
     queryset = Token.objects.all()
     serializer_class = TokenSerializer
-
-
-class AppUserDelete(generics.DestroyAPIView):
-    queryset = AppUser.objects.all()
-    serializer_class = AppUserSerializer
-    lookup_field = 'login'

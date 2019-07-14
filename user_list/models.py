@@ -33,6 +33,14 @@ class AppUser(models.Model):
     def __str__(self):
         return f'{self.login}'
 
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #
+    #     Token.objects.create(
+    #         token = f'{kwargs["login"]}_token',
+    #         user_id = AppUser.objects.get(login=kwargs['login']).pk
+    #     )
+
 
 class Token(models.Model):
     token_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # , unique=True)
