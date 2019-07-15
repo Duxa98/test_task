@@ -25,13 +25,19 @@ class AppUser(models.Model):
         ordering = ['login']
         db_table = 'appuser'
 
+
+    def save(self, **kwargs):
+        super().save(**kwargs)
+        token = f'{self.login}_token'
+        Token(user=self, token=token).save()
+
     def __str__(self):
         return f'{self.login}'
 
 
 class Token(models.Model):
     token_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # , unique=True)
-    user = models.ForeignKey(to=AppUser, on_delete=models.CASCADE, related_name='user_token')
+    user = models.OneToOneField(to=AppUser, on_delete=models.CASCADE, related_name='token')
     token = models.TextField(null=False, max_length=32, unique=True)
 
     class Meta:

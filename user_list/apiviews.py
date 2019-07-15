@@ -5,32 +5,12 @@ from user_list.models import AppUser, Token
 from .serializers import AppUserSerializer, TokenSerializer
 
 
-class AppUserList(generics.ListAPIView):
-    queryset = AppUser.objects.all()
-    serializer_class = AppUserSerializer
-
-
-class AppUserInfo(generics.RetrieveAPIView):
+class AppUserViewSet(viewsets.ModelViewSet):
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
     lookup_field = 'login'
 
-
-class AppUserCreate(generics.ListCreateAPIView):
-    queryset = AppUser.objects.all()
-    serializer_class = AppUserSerializer
-
-
-class AppUserUpdate(generics.RetrieveUpdateAPIView):
-    queryset = AppUser.objects.all()
-    serializer_class = AppUserSerializer
-    lookup_field = 'login'
-
-
-class AppUserDelete(generics.RetrieveDestroyAPIView):
-    queryset = AppUser.objects.all()
-    serializer_class = AppUserSerializer
-    lookup_field = 'login'
+    # def retrieve(self, request, *args, **kwargs):
 
 
 class TokenViewSet(viewsets.ModelViewSet):
