@@ -6,7 +6,6 @@ from stories import Failure, Success, arguments, story
 
 
 class AppUserSerializer(serializers.ModelSerializer):
-
     token = serializers.SlugRelatedField(
         read_only=True,
         slug_field='token'
@@ -20,12 +19,18 @@ class AppUserSerializer(serializers.ModelSerializer):
     #     super().save(**kwargs)
     #     GenerateTokenContainer.generate_token.generate(login=self.data['login'])
 
-class TokenSerializer(serializers.ModelSerializer):
 
+class AppUserInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AppUser
+        fields = '__all__'
+
+
+class TokenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Token
         fields = '__all__'
-        depth = 1
+
 
 class GenerateToken:
 
@@ -74,9 +79,11 @@ class GenerateToken:
     def __init__(self, user_id_getter):
         self.user_id_getter = user_id_getter
 
+
 class UserIdGetter:
     def get_user_id_by_login(self, login):
         return AppUser.objects.get(login=login).pk
+
 
 class GenerateTokenContainer(Injector):
     generate_token = GenerateToken

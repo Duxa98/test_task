@@ -6,3 +6,7 @@
 /test_task/__pycache__/**
 /user_list/__pycache__/
 /test_task/__pycache__/
+/user_list/migrations/__pycache__/
+/user_list/migrations/__pycache__/**
+/__pycache__/
+/__pycache__/**
