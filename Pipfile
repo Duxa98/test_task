@@ -14,6 +14,7 @@ stories = {git = "https://github.com/dry-python/stories.git",ref = "assignments-
 dependencies = {git = "https://github.com/dry-python/dependencies.git",ref = "master"}
 flake8 = "*"
 flake8-django = "*"
+django-unixtimestampfield = "*"
 
 [requires]
 python_version = "3.7"

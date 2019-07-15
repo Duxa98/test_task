@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from unixtimestampfield.fields import UnixTimeStampField
 
 # Create your models here.
 
@@ -11,12 +12,14 @@ FOOD_PREFERENCES = [
 
 
 class AppUser(models.Model):
-    user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # ,unique=True)
+    user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     login = models.CharField(null=False, unique=True, max_length=32)
-    weight = models.FloatField(null=True, default=0)
+    weight = models.DecimalField(null=True, max_digits=3, decimal_places=2, default=0)
     birthday = models.DateField(null=True)
-    creation_time = models.DateTimeField(auto_now_add=True, editable=False)  # TODO: goto timestamp
-    update_time = models.DateTimeField(auto_now=True, editable=False)  # TODO: goto timestamp
+    # creation_time = models.DateTimeField(auto_now_add=True, editable=False)
+    # update_time = models.DateTimeField(auto_now=True, editable=False)
+    creation_time = UnixTimeStampField(use_numeric=True, auto_now_add=True, editable=False)
+    update_time = UnixTimeStampField(use_numeric=True, auto_now=True, editable=False)
     food_preferences = models.CharField(null=True, default='M1', choices=FOOD_PREFERENCES, max_length=32)
 
     class Meta:
@@ -36,7 +39,7 @@ class AppUser(models.Model):
 
 
 class Token(models.Model):
-    token_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # , unique=True)
+    token_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(to=AppUser, on_delete=models.CASCADE, related_name='token')
     token = models.TextField(null=False, max_length=32, unique=True)
 

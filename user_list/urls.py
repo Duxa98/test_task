@@ -5,7 +5,7 @@ from rest_framework import routers
 from user_list.apiviews import TokenViewSet, AppUserViewSet
 
 router = routers.DefaultRouter()
-router.register(r'tokens', TokenViewSet, basename='token')  # TODO: delete
+router.register(r'tokens', TokenViewSet, basename='token')
 router.register(r'', AppUserViewSet, base_name='list')
 
 urlpatterns = [
