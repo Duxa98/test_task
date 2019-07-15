@@ -10,17 +10,16 @@ FOOD_PREFERENCES = [
     ('M3', 'menu3')
 ]
 
-
 class AppUser(models.Model):
     user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     login = models.CharField(null=False, unique=True, max_length=32)
-    weight = models.DecimalField(null=True, max_digits=3, decimal_places=2, default=0)
+    weight = models.DecimalField(max_digits=3, decimal_places=2, default=0)
     birthday = models.DateField(null=True)
     # creation_time = models.DateTimeField(auto_now_add=True, editable=False)
     # update_time = models.DateTimeField(auto_now=True, editable=False)
     creation_time = UnixTimeStampField(use_numeric=True, auto_now_add=True, editable=False)
     update_time = UnixTimeStampField(use_numeric=True, auto_now=True, editable=False)
-    food_preferences = models.CharField(null=True, default='M1', choices=FOOD_PREFERENCES, max_length=32)
+    food_preferences = models.CharField(default='M1', choices=FOOD_PREFERENCES, max_length=32)
 
     class Meta:
         verbose_name = 'AppUser'
