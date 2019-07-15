@@ -10,6 +10,7 @@ FOOD_PREFERENCES = [
     ('M3', 'menu3')
 ]
 
+
 class AppUser(models.Model):
     user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     login = models.CharField(null=False, unique=True, max_length=32)
@@ -26,7 +27,6 @@ class AppUser(models.Model):
         verbose_name_plural = 'AppUsers'
         ordering = ['login']
         db_table = 'appuser'
-
 
     def save(self, **kwargs):
         super().save(**kwargs)
