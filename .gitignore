@@ -2,11 +2,11 @@
 /db.sqlite3
 /user_list/model_utils.py
 /TODO
-/user_list/__pycache__/**
-/test_task/__pycache__/**
+/user_list/__pycache__/**.pyc
+/test_task/__pycache__/**.pyc
 /user_list/__pycache__/
 /test_task/__pycache__/
 /user_list/migrations/__pycache__/
-/user_list/migrations/__pycache__/**
+/user_list/migrations/__pycache__/**.pyc
 /__pycache__/
-/__pycache__/**
+/__pycache__/**.pyc
