@@ -11,6 +11,7 @@ from user_list.models import AppUser
 
 pytestmark = pytest.mark.django_db
 
+
 @pytest.fixture(params=[1, 2])
 def user(db, request):
     for i in range(request.param):
@@ -20,6 +21,7 @@ def user(db, request):
         )
     return request.param
 
+
 @pytest.fixture
 def client(db):
     return APIClient()
@@ -28,6 +30,7 @@ def client(db):
 @pytest.fixture
 def factory():
     return APIRequestFactory()
+
 
 @pytest.fixture
 def list_view(db):

@@ -5,7 +5,8 @@
 # from rest_framework.reverse import reverse
 import pytest
 
-#TODO: DRY(creating every time)
+
+# TODO: DRY(creating every time)
 
 def test_list_view(factory, list_view):
     path = '/users/'
@@ -93,6 +94,7 @@ def test_create_ok(client, login):
 
 def test_update_view():
     pass
+
 
 def test_update(user, client):
     param = user

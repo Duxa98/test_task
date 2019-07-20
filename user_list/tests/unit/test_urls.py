@@ -5,4 +5,4 @@
 #     print(f'\nPRINT:{path}')
 #     print(f'\nPRINT:{resolve(path).view_name}')
 #     assert resolve(path).view_name == 'list'
-#TODO: dont work reverse
+# TODO: dont work reverse
