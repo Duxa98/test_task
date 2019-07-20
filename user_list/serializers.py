@@ -1,8 +1,10 @@
-from dependencies import Injector
+# from dependencies import Injector
 from rest_framework import serializers
 
 from user_list.models import AppUser, Token
-from stories import Failure, Success, arguments, story
+
+
+# from stories import Failure, Success, arguments, story
 
 
 class AppUserSerializer(serializers.ModelSerializer):
@@ -13,7 +15,7 @@ class AppUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AppUser
-        fields = '__all__' #TODO: перечислять все поля лучше?
+        fields = '__all__'  # TODO: перечислять все поля лучше?
 
     # def save(self, **kwargs):
     #     super().save(**kwargs)

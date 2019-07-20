@@ -74,40 +74,52 @@ def test_create_ok(client, login):
     assert ans['login'] == login
 
 
-# def test_create_fail(client):  # TODO: think its not my business
-#     path = '/users/'
-#     login = 'any_login'
-#     data = {
-#         'login': login
-#     }
-#     response = client.post(path, data=data, format='json')
-#
-#     assert response.status_code == 201
-#
-#     response = client.post(path, data=data, format='json')
-#
-#     assert response.status_code == 400
-#
-#     response = client.post(path, data={}, format='json')
-#
-#     assert response.status_code == 400
-
 def test_update_view():
     pass
 
 
 def test_update(user, client):
     param = user
-    path = '/users/'
-    for i in param:
+    base_path = '/users/'
+
+    for i in range(param):
+        login = f'login_{i}'
+        path = base_path + login + '/'
         data = {
-            'login': f'login_{i}',
+            'login': login,
             'weight': i * 100
         }
         response = client.put(path, data=data, format='json')
 
-        # assert response.status_code ==
+        assert response.status_code == 200
+
+        ans = response.json()
+
+        assert float(ans['weight']) == float(i * 100)
 
 
-def test_delete():
-    pass
+def test_partial_update(user, client):
+    param = user
+    base_path = '/users/'
+
+    for i in range(param):
+        login = f'login_{i}'
+        path = base_path + login + '/'
+        data = {
+            'weight': i * 200
+        }
+        response = client.patch(path, data=data, format='json')
+
+        assert response.status_code == 200
+
+        ans = response.json()
+
+        assert float(ans['weight']) == float(i * 200)
+
+
+def test_delete(user, client):
+    path = '/users/login_0/'
+
+    response = client.delete(path)
+
+    assert response.status_code == 204

@@ -10,7 +10,7 @@ class AppUserViewSet(viewsets.ModelViewSet):
     lookup_field = 'login'
 
     def get_serializer_class(self):
-        if self.action in ('retrieve', 'update'):
+        if self.action in ('retrieve', 'update', 'partial_update'):
             return AppUserInfoSerializer
         return AppUserSerializer
 
