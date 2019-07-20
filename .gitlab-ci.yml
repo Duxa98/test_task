@@ -21,4 +21,4 @@ test:
     - pipenv install
 
   script:
-    - py.test
+    - pipenv run py.test
