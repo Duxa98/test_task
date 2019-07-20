@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-from unixtimestampfield.fields import UnixTimeStampField
+# from unixtimestampfield.fields import UnixTimeStampField
 
 # Create your models here.
 
@@ -16,10 +16,10 @@ class AppUser(models.Model):
     login = models.CharField(null=False, unique=True, max_length=32)
     weight = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     birthday = models.DateField(null=True)
-    # creation_time = models.DateTimeField(auto_now_add=True, editable=False)
-    # update_time = models.DateTimeField(auto_now=True, editable=False)
-    creation_time = UnixTimeStampField(use_numeric=True, auto_now_add=True, editable=False)
-    update_time = UnixTimeStampField(use_numeric=True, auto_now=True, editable=False)
+    creation_time = models.DateTimeField(auto_now_add=True, editable=False)
+    update_time = models.DateTimeField(auto_now=True, editable=False)
+    # creation_time = UnixTimeStampField(use_numeric=True, auto_now_add=True, editable=False)
+    # update_time = UnixTimeStampField(use_numeric=True, auto_now=True, editable=False)
     food_preferences = models.CharField(default='M1', choices=FOOD_PREFERENCES, max_length=32)
 
     class Meta:
@@ -31,7 +31,8 @@ class AppUser(models.Model):
     def save(self, **kwargs):
         super().save(**kwargs)
         token = f'{self.login}_token'
-        Token(user=self, token=token).save()
+        if not Token.objects.filter(token=token).exists():
+            Token(user=self, token=token).save()
 
     def __str__(self):
         return f'{self.login}'

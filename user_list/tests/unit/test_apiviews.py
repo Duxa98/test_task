@@ -91,10 +91,20 @@ def test_create_ok(client, login):
 #
 #     assert response.status_code == 400
 
+def test_update_view():
+    pass
+
 def test_update(user, client):
     param = user
     path = '/users/'
-    data = {}
+    for i in param:
+        data = {
+            'login': f'login_{i}',
+            'weight': i * 100
+        }
+        response = client.put(path, data=data, format='json')
+
+        # assert response.status_code ==
 
 
 def test_delete():
