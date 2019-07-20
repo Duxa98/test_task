@@ -14,7 +14,7 @@ test:
   stage: test
 
   before_script:
-    - apt-get update -qq && apt-get install -y -qq pytest
+    - pip install pytest pytest-django
 
   script:
     - py.test
