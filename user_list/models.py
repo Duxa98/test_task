@@ -32,14 +32,14 @@ class AppUser(models.Model):
     def save(self, **kwargs):
         super().save(**kwargs)
         token = f'{self.login}_token'
-        if not Token.objects.filter(token=token).exists():
-            Token(user=self, token=token).save()
+        if not MyToken.objects.filter(token=token).exists():
+            MyToken(user=self, token=token).save()
 
     def __str__(self):
         return f'{self.login}'
 
 
-class Token(models.Model):
+class MyToken(models.Model):
     token_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(to=AppUser, on_delete=models.CASCADE, related_name='token')
     token = models.TextField(null=False, max_length=32, unique=True)

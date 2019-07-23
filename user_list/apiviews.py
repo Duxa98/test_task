@@ -1,9 +1,18 @@
 # Create your views here.
-from rest_framework import viewsets
+from rest_framework import viewsets, generics, status
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
-from user_list.models import AppUser, Token
-from .serializers import AppUserSerializer, TokenSerializer, AppUserInfoSerializer
+from django.contrib.auth import authenticate
 
+from user_list.models import AppUser, MyToken
+from .serializers import AppUserSerializer, MyTokenSerializer, AppUserInfoSerializer, UserSerializer
+
+
+class UserCreate(generics.CreateAPIView):
+    authentication_classes = ()
+    permission_classes = ()
+    serializer_class = UserSerializer
 
 class AppUserViewSet(viewsets.ModelViewSet):
     queryset = AppUser.objects.all()
@@ -16,5 +25,5 @@ class AppUserViewSet(viewsets.ModelViewSet):
 
 
 class TokenViewSet(viewsets.ModelViewSet):
-    queryset = Token.objects.all()
-    serializer_class = TokenSerializer
+    queryset = MyToken.objects.all()
+    serializer_class = MyTokenSerializer

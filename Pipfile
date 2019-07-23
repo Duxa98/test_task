@@ -15,6 +15,7 @@ dependencies = {git = "https://github.com/dry-python/dependencies.git",ref = "ma
 flake8 = "*"
 flake8-django = "*"
 django-unixtimestampfield = "*"
+authenticate = "*"
 
 [requires]
 python_version = "3.7"
