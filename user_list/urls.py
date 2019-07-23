@@ -11,7 +11,6 @@ router.register(r'', AppUserViewSet, base_name='list')
 
 urlpatterns = [
     path('create/', UserCreate.as_view(), name='user_create'),
-    # path('login/', LoginView.as_view(), name='login'),
     path('login/', views.obtain_auth_token, name='login'),
     url(r'^', include(router.urls)),
 ]

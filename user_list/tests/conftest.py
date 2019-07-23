@@ -19,6 +19,7 @@ def create_admin_user(db):
     user.save()
     Token.objects.create(user=user)
 
+
 @pytest.fixture
 def token(db):
     return Token.objects.get(user__username='admin')

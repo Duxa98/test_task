@@ -10,7 +10,6 @@ from user_list.models import AppUser, MyToken
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
         fields = ('username', 'email', 'password')
@@ -25,6 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         Token.objects.create(user=user)
         return user
+
 
 class AppUserSerializer(serializers.ModelSerializer):
     token = serializers.SlugRelatedField(

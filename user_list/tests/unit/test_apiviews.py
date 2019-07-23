@@ -3,10 +3,8 @@
 # from django.urls import reverse
 
 # from rest_framework.reverse import reverse
-from rest_framework.test import force_authenticate
 import pytest
 
-from django.contrib.auth.models import User
 
 # TODO: DRY(creating every time)
 
@@ -33,6 +31,7 @@ def test_list_data(app_user, client, factory):
         assert ans[i]['login'] == f'login_{i}'
         assert ans[i]['token'] == f'login_{i}_token'
         assert float(ans[i]['weight']) == float(i * 10)
+
 
 # @pytest.mark.skip
 def test_info_view(factory, token, list_view):  # TODO: how to test view separately
@@ -74,6 +73,7 @@ def test_create_ok(client, login):
     ans = response.json()
 
     assert ans['login'] == login
+
 
 # @pytest.mark.skip
 def test_update_view():

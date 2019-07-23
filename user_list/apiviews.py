@@ -10,6 +10,7 @@ class UserCreate(generics.CreateAPIView):
     permission_classes = ()
     serializer_class = UserSerializer
 
+
 class AppUserViewSet(viewsets.ModelViewSet):
     queryset = AppUser.objects.all()
     lookup_field = 'login'
