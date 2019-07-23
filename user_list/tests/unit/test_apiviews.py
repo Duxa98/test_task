@@ -3,27 +3,29 @@
 # from django.urls import reverse
 
 # from rest_framework.reverse import reverse
+from rest_framework.test import force_authenticate
 import pytest
 
+from django.contrib.auth.models import User
 
 # TODO: DRY(creating every time)
 
-def test_list_view(factory, list_view):
+# @pytest.mark.skip
+def test_list_view(factory, token, list_view):
     path = '/users/'
-    request = factory.get(path)
+    request = factory.get(path, HTTP_AUTHORIZATION=f'Token {token.key}')
     response = list_view(request)
-
     assert response.status_code == 200
 
 
-def test_list_data(user, client, factory):
+def test_list_data(app_user, client, factory):
     path = '/users/'
     response = client.get(path)
 
     assert response.status_code == 200
 
     ans = response.json()
-    param = user
+    param = app_user
 
     assert len(ans) == param
 
@@ -32,18 +34,18 @@ def test_list_data(user, client, factory):
         assert ans[i]['token'] == f'login_{i}_token'
         assert float(ans[i]['weight']) == float(i * 10)
 
-
-def test_info_view(factory, list_view):  # TODO: how to test view separately
+# @pytest.mark.skip
+def test_info_view(factory, token, list_view):  # TODO: how to test view separately
     path = '/users/'
-    request = factory.get(path)
+    request = factory.get(path, HTTP_AUTHORIZATION=f'Token {token.key}')
     response = list_view(request)
 
     assert response.status_code == 200
 
 
-def test_info_data(user, client):
+def test_info_data(app_user, client):
     base_path = '/users/'
-    param = user
+    param = app_user
 
     for i in range(param):
         path = base_path + f'login_{i}/'
@@ -73,13 +75,13 @@ def test_create_ok(client, login):
 
     assert ans['login'] == login
 
-
+# @pytest.mark.skip
 def test_update_view():
     pass
 
 
-def test_update(user, client):
-    param = user
+def test_update(app_user, client):
+    param = app_user
     base_path = '/users/'
 
     for i in range(param):
@@ -98,8 +100,8 @@ def test_update(user, client):
         assert float(ans['weight']) == float(i * 100)
 
 
-def test_partial_update(user, client):
-    param = user
+def test_partial_update(app_user, client):
+    param = app_user
     base_path = '/users/'
 
     for i in range(param):
@@ -117,7 +119,7 @@ def test_partial_update(user, client):
         assert float(ans['weight']) == float(i * 200)
 
 
-def test_delete(user, client):
+def test_delete(app_user, client):
     path = '/users/login_0/'
 
     response = client.delete(path)
